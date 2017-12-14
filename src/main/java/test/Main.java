@@ -43,7 +43,7 @@ public class Main {
      FirebaseApp.initializeApp(options);
 
 
-        System.out.println("Hii");
+        System.out.println("Hidi");
 
         new te();
 
