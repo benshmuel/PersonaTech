@@ -3,6 +3,8 @@ package test;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.*;
+import org.apache.log4j.BasicConfigurator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,16 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        initFireBase();
-        System.out.println("Hii");
-
-
-    }
-
-
-
-    public static void initFireBase(){
+        //BasicConfigurator.configure();
 
 
 
@@ -47,6 +40,17 @@ public class Main {
             e.printStackTrace();
         }
 
-        FirebaseApp.initializeApp(options);
+     FirebaseApp.initializeApp(options);
+
+
+        System.out.println("Hii");
+
+        new te();
+
+
+
     }
-}
+
+
+
+    }
