@@ -1,5 +1,6 @@
 package test;
 
+
 import com.google.firebase.database.*;
 
 /**
@@ -14,12 +15,12 @@ public class te {
 
 
         Query q =myRef.getReference()
-                .child("Employess");
+                .child("Employees");
 
-        q.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot snapshot) {
+        q.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("onDataChange");
-                for(DataSnapshot ds : snapshot.getChildren()){
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
                     System.out.println(ds);
                     System.out.println("whaet the ???");
                 }
