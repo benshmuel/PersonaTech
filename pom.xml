@@ -51,7 +51,7 @@
                 </executions>
                 <configuration>
                     <executable>maven</executable>
-                    <mainClass>test.Main</mainClass>
+                    <mainClass>ServerPackage.MainClass</mainClass>
                 </configuration>
             </plugin>
             <plugin>
