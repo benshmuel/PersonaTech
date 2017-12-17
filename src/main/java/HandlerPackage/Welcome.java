@@ -23,7 +23,7 @@ public class Welcome extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Client  is Connected! ... ");
+        System.out.println("Client  is Connected ... ");
         System.out.println("Socket Information :  " + socket.toString() );
         try {
 
