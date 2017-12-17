@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by benshmuel on 23/11/2017.
- */
-public class LoginClass implements Serializable{
+ */public class LoginClass implements Serializable{
+
     private static final long serialVersionUID = 321L;
 
 
@@ -35,5 +35,15 @@ public class LoginClass implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String toString(){
+
+        return getClass().getName() + " Username = " + this.getUserEmail() + " Password = "
+                + this.getPassword() ;
+
+
+
+
     }
 }

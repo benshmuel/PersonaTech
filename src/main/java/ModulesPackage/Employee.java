@@ -7,22 +7,31 @@ import java.io.Serializable;
  */
 public class Employee implements Serializable {
 
-    private int age;
-    private String name;
-    private String uId;
-    private String userType;
-    private String userEmail;
     private static final long serialVersionUID = 1113L;
+
+    private String uId;
+
+    private String userType;
+    private String name;
+    private String id;
+    private int age;
+    private String address;
+    private String phoneNumber;
+    private String county;
+
 
     public Employee() {
     }
 
-    public Employee(String uId, String userType, int age, String name , String userEmail) {
-        this.uId = uId;
+    public Employee(String id, String userType, int age, String name , String address , String phoneNumber , String county) {
+        this.uId = null;
+        this.id = id;
         this.userType = userType;
         this.age = age;
         this.name = name;
-        this.userEmail = userEmail;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.county = county;
     }
 
     public int getAge() {
@@ -57,16 +66,46 @@ public class Employee implements Serializable {
         this.uId = uId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getId() {
+        return id;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     @Override
     public String toString() {
-        return "The Employee is : \n"+getName()+"\n"+getAge()+"\n"+getUserType()+"\n"+getuId()+"\n";
+
+        return getClass().getName() + " Employee name = " + this.getName() + " Employee UserType = "
+                + this.getUserType() + " Employee id = " + this.getId() + " Age = " + this.getAge()
+                + " Address = " + this.getAddress() + " Phone number = " + this.getPhoneNumber()
+                + " County = " + this.getCounty()
+                ;
+
     }
 }

@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by benshmuel on 23/11/2017.
  */
 public class Message implements Serializable {
+
     private static final long serialVersionUID = 123L;
 
     private String name;
