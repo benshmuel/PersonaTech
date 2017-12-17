@@ -92,7 +92,7 @@ public class Welcome extends Thread {
                         }
                         break;
                     case "Add child":
-
+                        System.out.println("add child");
                         Child childToAdd = (Child)objectInputStream.readObject();
                         System.out.println("About to add new child to the system");
                         if(firebaseHandler!=null) {
