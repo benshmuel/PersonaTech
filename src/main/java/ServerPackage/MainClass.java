@@ -26,9 +26,6 @@ public class MainClass {
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
 
-
-
-
         // starting to listen to clients //
 
         try(ServerSocket serverSocket = new ServerSocket(8080)) {
