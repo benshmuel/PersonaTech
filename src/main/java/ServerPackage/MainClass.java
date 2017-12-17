@@ -1,5 +1,6 @@
 package ServerPackage;
 
+import HandlerPackage.FirebaseHandler;
 import HandlerPackage.Welcome;
 
 import java.io.FileNotFoundException;
@@ -22,6 +23,8 @@ public class MainClass {
         System.out.println("Server is Started");
 
 
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
+
 
 
 
@@ -30,7 +33,7 @@ public class MainClass {
 
         try(ServerSocket serverSocket = new ServerSocket(8080)) {
             while(true) {
-                new Welcome(serverSocket.accept()).start();
+                new Welcome(serverSocket.accept(),firebaseHandler).start();
             }
 
 

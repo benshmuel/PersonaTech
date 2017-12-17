@@ -14,10 +14,11 @@ public class Welcome extends Thread {
 
     private Socket socket;
     private Employee currentEmployee; // stoped here
-    private FirebaseHandler firebaseHandler = new FirebaseHandler();
+    private FirebaseHandler firebaseHandler ;
 
-    public Welcome(Socket socket) {
+    public Welcome(Socket socket ,FirebaseHandler firebaseHandler) {
         this.socket = socket;
+        this.firebaseHandler = firebaseHandler;
     }
 
     @Override
