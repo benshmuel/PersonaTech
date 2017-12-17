@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class Welcome extends Thread {
 
@@ -54,6 +55,7 @@ public class Welcome extends Thread {
                         firebaseHandler.setCurrentUser(currentUser);
 
                         if(firebaseHandler.authenticateFireBase().equals(FirebaseHandler.SUCCESS)){
+                            System.out.println("########################################");
                             System.out.println("user is successfully logged in");
 
                             // message's header ( success )
@@ -71,19 +73,24 @@ public class Welcome extends Thread {
 
 
 
-                        // for testing only (getting the right kindergartens)
-//                        try {
-//                            List<String > stringList =firebaseHandler.getKindergartenList();
-//                            System.out.println("Kindergartens :: ");
-//                            for(String str : stringList){
-//                                System.out.println(" -- > " + str);
-//                            }
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
+
 
                         break;
 
+                    case "get Kindergartens" :
+                        // for testing only (getting the right kindergartens)
+                        try {
+                            List<String > stringList =firebaseHandler.getKindergartenList();
+                            objectOutputStream.writeObject(stringList);
+
+                            System.out.println("Kindergartens that sent to the Client  ::: ");
+                            for(String str : stringList){
+                                System.out.println(" ---- > " + str);
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     case "Add child":
 
                         Child childToAdd = (Child)objectInputStream.readObject();

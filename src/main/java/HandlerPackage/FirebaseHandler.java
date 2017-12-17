@@ -214,8 +214,8 @@ public class FirebaseHandler {
     public String registerNewEmployee(Employee employee){
 
         // TODO: 08/12/2017 Create new user entry
-        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(employee.getUserEmail());
+//        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+//                .setEmail(employee.getUserEmail());
 
         return "";
     }
