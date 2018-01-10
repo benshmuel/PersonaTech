@@ -6,6 +6,8 @@ import HandlerPackage.Welcome;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by benshmuel on 22/11/2017.
@@ -20,7 +22,19 @@ public class MainClass {
         //working on DB is below //
 
 
+        for(int i=0;i<50;i++)
+            System.out.println("\n");
+
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+        System.out.println("**************************************************************");
+        System.out.println("**************************************************************");
         System.out.println("Server is Started");
+        System.out.println("Current Server Time : " + sdf.format(cal.getTime()));
+        System.out.println("**************************************************************");
+        System.out.println("**************************************************************");
 
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
