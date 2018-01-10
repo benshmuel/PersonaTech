@@ -6,6 +6,7 @@ import ModulesPackage.LoginClass;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.database.*;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 
 
@@ -85,11 +87,11 @@ public class FirebaseHandler {
             String message = "{\"email\":\""+username+"\",\"password\":\""+password+"\",\"returnSecureToken\":true}";
             byte[] outputBytes = message.getBytes("UTF-8");
             OutputStream os = con.getOutputStream();
-            System.out.println(os);
+//            System.out.println(os);
             os.write(outputBytes);
 
-            System.out.println("1 " + con.getRequestMethod());
-            System.out.println("2 " + con.getResponseMessage());
+//            System.out.println("1 " + con.getRequestMethod());
+//            System.out.println("2 " + con.getResponseMessage());
 
             // login successfully ..
             if(con.getResponseMessage().equals(SUCCESS)){
@@ -149,9 +151,7 @@ public class FirebaseHandler {
             getUser.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot);
                 Employee employee =dataSnapshot.getValue(Employee.class);
-                System.out.println(employee.toString());
                 employeeToReturn[0] =employee;
                 semaphore.release();
 
@@ -188,7 +188,6 @@ public class FirebaseHandler {
                 dataRef.setValue(child, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                        System.out.println("HERE");
                         if(databaseError!=null)
                             returnVal[0] = FAIL;
                         else
@@ -210,14 +209,60 @@ public class FirebaseHandler {
     }
 
 
+    // TODO: 10/01/2018 Test this method with itamar , need to add employee from scarcth and see what happens ..
+    public String registerNewEmployee(Employee employee , LoginClass loginCredentials){
 
-    public String registerNewEmployee(Employee employee){
 
-        // TODO: 08/12/2017 Create new user entry
-//        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-//                .setEmail(employee.getUserEmail());
+        final String[] returnVal = {FAIL};
+        final Semaphore semaphoreChild = new Semaphore(0);
 
-        return "";
+        // google auth - create new user entry using request method ...
+        // getting relevant information from the loginCredentials Object
+
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(loginCredentials.getUserEmail())
+                .setPassword(loginCredentials.getPassword());
+
+        try {
+            // alright so userRecord holds the record of the new user , need to extract the UID in order the write it to the database !
+
+            UserRecord userRecord = FirebaseAuth.getInstance().createUserAsync(request).get();
+
+            //DB issue , need to hold the id inside the emoloyee object
+            employee.setuId(userRecord.getUid());
+
+
+            DatabaseReference  databaseReference = myRef.getReference()
+                                                        .child("Employees")
+                                                        .child(employee.getuId());
+
+            databaseReference.setValue(employee, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError error, DatabaseReference ref) {
+                    if(error == null){
+                        returnVal[0] =SUCCESS;
+                        semaphore.release();
+
+                    }
+                }
+            });
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
+        // makes the thread wait here till the operation is fully completed
+
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returnVal[0];
     }
 
 
@@ -254,4 +299,8 @@ public class FirebaseHandler {
 
     }
 
+
+    public String getCurrentUserUID() {
+        return currentUserUID;
+    }
 }

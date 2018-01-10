@@ -22,7 +22,7 @@ public class MainClass {
         //working on DB is below //
 
 
-        for(int i=0;i<50;i++)
+        for(int i=0;i<20;i++)
             System.out.println("\n");
 
 
@@ -31,6 +31,7 @@ public class MainClass {
 
         System.out.println("**************************************************************");
         System.out.println("**************************************************************");
+        System.out.println("Persona-Tech 2018 \u00AE");
         System.out.println("Server is Started");
         System.out.println("Current Server Time : " + sdf.format(cal.getTime()));
         System.out.println("**************************************************************");

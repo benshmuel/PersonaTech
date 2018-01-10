@@ -24,8 +24,9 @@ public class Welcome extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Client  is Connected ... ");
-        System.out.println("Socket Information :  " + socket.toString() );
+        String client = "Unknown Client" ;
+        System.out.println("Establishing new connection with "+client);
+        System.out.println("Socket Information :  " + socket.toString());
         try {
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -51,13 +52,13 @@ public class Welcome extends Thread {
                     case "login":
 
                         LoginClass currentUser = (LoginClass) objectInputStream.readObject();
-                        System.out.println("The user " + currentUser.getUserEmail() +" is inside the server");
+                        System.out.println(client +" identify as " + currentUser.getUserEmail());
+                        client = currentUser.getUserEmail();
+                        System.out.println(currentUser.getUserEmail() +" is trying to log into the system ...");
                         firebaseHandler.setCurrentUser(currentUser);
 
                         if(firebaseHandler.authenticateFireBase().equals(FirebaseHandler.SUCCESS)){
-                            System.out.println("########################################");
-                            System.out.println("user is successfully logged in");
-
+                            System.out.println(client+" is successfully logged in");
                             // message's header ( success )
                             objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
                             // message's body ( the actual object)
@@ -79,11 +80,12 @@ public class Welcome extends Thread {
 
                     case "get Kindergartens" :
                         // for testing only (getting the right kindergartens)
+                        System.out.println(client +" is asking for all Kindergartens");
                         try {
                             List<String > stringList =firebaseHandler.getKindergartenList();
                             objectOutputStream.writeObject(stringList);
 
-                            System.out.println("Kindergartens that sent to the Client  ::: ");
+                            System.out.println("Kindergartens that sent to the Client  : ");
                             for(String str : stringList){
                                 System.out.println(" ---- > " + str);
                             }
@@ -92,14 +94,18 @@ public class Welcome extends Thread {
                         }
                         break;
                     case "Add child":
-                        System.out.println("add child");
+
+                        System.out.println("handling "+client+"'s" +"request for adding new child to the system");
                         Child childToAdd = (Child)objectInputStream.readObject();
-                        System.out.println("About to add new child to the system");
+                        System.out.println("Adding new child to the system ... ");
                         if(firebaseHandler!=null) {
                             if (firebaseHandler.registerNewChild(childToAdd).equals(FirebaseHandler.SUCCESS)) {
                                 objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
+                                System.out.println("Child added successfully");
                             }
-                            else objectOutputStream.writeObject(FirebaseHandler.FAIL);
+                            else {
+                                System.out.println("Error with adding new child - child didn't added successfully");
+                                objectOutputStream.writeObject(FirebaseHandler.FAIL);}
                         }
                         else {
                             objectOutputStream.writeObject(FirebaseHandler.FAIL);
@@ -112,8 +118,11 @@ public class Welcome extends Thread {
 
                     case "Add employee" :
 
+                        LoginClass loginCredentials =(LoginClass)objectInputStream.readObject();
                         Employee employeeToAdd = (Employee)objectInputStream.readObject();
-                        System.out.println("got new employee to add to the system");
+
+                        System.out.println("The Client " + client +" requested to add new Employee ");
+                        System.out.println("Employee information :: " + employeeToAdd.toString());
                         if(firebaseHandler!=null){
 
                         }
