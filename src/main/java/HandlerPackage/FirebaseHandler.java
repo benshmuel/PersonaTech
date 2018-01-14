@@ -238,7 +238,7 @@ public class FirebaseHandler {
             // Init the values of diagnostics per social worker , we start from '0' //
 
             DatabaseReference initEmployeeStatistics = myRef.getReference()
-                                                            .child("EmployeeTrack")
+                                                            .child("EmployeesTrack")
                                                             .child(employee.getuId());
 
             final EmployeePerformance employeePerformance =
