@@ -22,7 +22,6 @@ public class MainClass {
 
         //working on DB is below //
 
-        //BasicConfigurator.configure();
         for(int i=0;i<20;i++)
             System.out.println("\n");
 
