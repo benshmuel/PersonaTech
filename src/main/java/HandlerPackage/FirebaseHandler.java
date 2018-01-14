@@ -209,7 +209,7 @@ public class FirebaseHandler {
     }
 
 
-    public String registerNewEmployee(Employee employee , LoginClass loginCredentials){
+    public String registerNewEmployee(final Employee employee , LoginClass loginCredentials){
 
 
         final String[] returnVal = {FAIL};
@@ -241,10 +241,17 @@ public class FirebaseHandler {
                                                             .child("EmployeeTrack")
                                                             .child(employee.getuId());
 
-            initEmployeeStatistics.setValue("0", new DatabaseReference.CompletionListener() {
+            final EmployeePerformance employeePerformance =
+                    new EmployeePerformance(employee.getuId()
+                    ,employee.getName(),0,
+                            0,0);
+            initEmployeeStatistics.setValue(employeePerformance, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError error, DatabaseReference ref) {
 
+                    System.out.println("Added new employee successfully !!");
+                    System.out.println("Employee details");
+                    System.out.println(employeePerformance.toString());
                 }
             });
 
