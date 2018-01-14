@@ -185,6 +185,23 @@ public class Welcome extends Thread {
                             objectOutputStream.writeObject(FirebaseHandler.FAIL);
 
                         break;
+
+
+
+                    case "get childrensByKindergarten" :
+
+                        String kindergarten = (String)objectInputStream.readObject();
+                        if(firebaseHandler!=null){
+
+                            List<Child> childrens = firebaseHandler.getChilderensByKindergarten(kindergarten);
+                            objectOutputStream.writeObject(childrens);
+
+                        }
+                        else
+                            objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+
+                        break;
                 }
 
 
