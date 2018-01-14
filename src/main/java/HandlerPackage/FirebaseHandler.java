@@ -241,7 +241,7 @@ public class FirebaseHandler {
                 public void onComplete(DatabaseError error, DatabaseReference ref) {
                     if(error == null){
                         returnVal[0] =SUCCESS;
-                        semaphore.release();
+                        semaphoreChild.release();
 
                     }
                 }
@@ -258,7 +258,7 @@ public class FirebaseHandler {
         // makes the thread wait here till the operation is fully completed
 
         try {
-            semaphore.acquire();
+            semaphoreChild.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

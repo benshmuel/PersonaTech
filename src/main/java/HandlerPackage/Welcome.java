@@ -51,14 +51,16 @@ public class Welcome extends Thread {
 
                     case "login":
 
+                        System.out.println("**************************************************************");
                         LoginClass currentUser = (LoginClass) objectInputStream.readObject();
                         System.out.println(client +" identify as " + currentUser.getUserEmail());
                         client = currentUser.getUserEmail();
                         System.out.println(currentUser.getUserEmail() +" is trying to log into the system ...");
+                        System.out.println("**************************************************************");
                         firebaseHandler.setCurrentUser(currentUser);
 
                         if(firebaseHandler.authenticateFireBase().equals(FirebaseHandler.SUCCESS)){
-                            System.out.println(client+" is successfully logged in");
+                            System.out.println(client+" is successfully logged in !");
                             // message's header ( success )
                             objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
                             // message's body ( the actual object)
@@ -124,6 +126,13 @@ public class Welcome extends Thread {
                         System.out.println("The Client " + client +" requested to add new Employee ");
                         System.out.println("Employee information :: " + employeeToAdd.toString());
                         if(firebaseHandler!=null){
+
+                            if(firebaseHandler.registerNewEmployee(employeeToAdd,loginCredentials).equals(FirebaseHandler.SUCCESS))
+                                objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
+                            else
+                                objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+
 
                         }
                         break;

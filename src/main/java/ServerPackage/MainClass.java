@@ -2,6 +2,7 @@ package ServerPackage;
 
 import HandlerPackage.FirebaseHandler;
 import HandlerPackage.Welcome;
+import org.apache.log4j.BasicConfigurator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class MainClass {
 
         //working on DB is below //
 
-
+        BasicConfigurator.configure();
         for(int i=0;i<20;i++)
             System.out.println("\n");
 
