@@ -1,15 +1,13 @@
 package HandlerPackage;
 
-import ModulesPackage.Child;
-import ModulesPackage.Employee;
-import ModulesPackage.LoginClass;
-import ModulesPackage.Message;
+import ModulesPackage.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 
 public class Welcome extends Thread {
 
@@ -74,10 +72,6 @@ public class Welcome extends Thread {
                             objectOutputStream.writeObject(FirebaseHandler.FAIL);
                         }
 
-
-
-
-
                         break;
 
                     case "get Kindergartens" :
@@ -89,7 +83,7 @@ public class Welcome extends Thread {
 
                             System.out.println("Kindergartens that sent to the Client  : ");
                             for(String str : stringList){
-                                System.out.println(" ---- > " + str);
+                                System.out.println("----> " + str);
                             }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -135,8 +129,54 @@ public class Welcome extends Thread {
 
 
                         }
+                        else
+                            objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
                         break;
 
+
+
+
+                    case "get EmployeeStatistics" :
+                        if (firebaseHandler!=null){
+
+                            System.out.println("The Client " + client +" requested all employees statistics ");
+                            try {
+                                List<EmployeePerformance> statistics = firebaseHandler.getEmployeePerformance();
+                                objectOutputStream.writeObject(statistics);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                        else
+                            objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+                        break;
+
+
+
+                    case "Add Diagnostic":
+
+                        if (firebaseHandler!=null){
+
+                            String type = (String)objectInputStream.readObject();
+                            Employee currentEmployee  = (Employee)objectInputStream.readObject();
+
+                            if(firebaseHandler.addNewDiagnostic(currentEmployee,type).equals(FirebaseHandler.SUCCESS)){
+                                objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
+
+                            }
+                            else
+                                objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+
+                        }
+                        else
+                            objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+                        break;
                 }
 
 

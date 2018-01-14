@@ -1,8 +1,6 @@
 package HandlerPackage;
 
-import ModulesPackage.Child;
-import ModulesPackage.Employee;
-import ModulesPackage.LoginClass;
+import ModulesPackage.*;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -16,7 +14,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 
@@ -209,7 +209,6 @@ public class FirebaseHandler {
     }
 
 
-    // TODO: 10/01/2018 Test this method with itamar , need to add employee from scarcth and see what happens ..
     public String registerNewEmployee(Employee employee , LoginClass loginCredentials){
 
 
@@ -235,6 +234,19 @@ public class FirebaseHandler {
             DatabaseReference  databaseReference = myRef.getReference()
                                                         .child("Employees")
                                                         .child(employee.getuId());
+
+            // Init the values of diagnostics per social worker , we start from '0' //
+
+            DatabaseReference initEmployeeStatistics = myRef.getReference()
+                                                            .child("EmployeeTrack")
+                                                            .child(employee.getuId());
+
+            initEmployeeStatistics.setValue("0", new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError error, DatabaseReference ref) {
+
+                }
+            });
 
             databaseReference.setValue(employee, new DatabaseReference.CompletionListener() {
                 @Override
@@ -300,6 +312,156 @@ public class FirebaseHandler {
     }
 
 
+    // TODO: 14/01/2018 test this function 
+    public List<EmployeePerformance> getEmployeePerformance() throws InterruptedException {
+
+        final Semaphore semaphoreEmp = new Semaphore(0);
+         final List<EmployeePerformance> statisticsEmp = new ArrayList<>();
+
+
+        Query getStatistics = myRef.getReference()
+                                    .child("EmployeesTrack");
+
+
+
+        getStatistics.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    statisticsEmp.add(dataSnapshot.getValue(EmployeePerformance.class));
+                    if(statisticsEmp.size() == snapshot.getChildrenCount()) semaphoreEmp.release();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+        semaphoreEmp.acquire();
+        return statisticsEmp;
+    }
+
+    // TODO: 14/01/2018  test this function
+    public String addNewDiagnostic (final Employee currentEmployee,String type){
+
+        String testType =type+"DiagCounter";
+
+
+        final long[] currentEmployeeCounter = {-1};
+
+        final Query getEmployeeDiagnostics = myRef.getReference()
+                                                .child("EmployeeTrack")
+                                                .child(currentEmployee.getuId())
+                                                .child(testType);
+
+        final DatabaseReference updateValue = myRef.getReference().child("EmployeeTrack")
+                                                            .child(currentEmployee.getuId())
+                                                            .child(testType);
+
+
+
+        getEmployeeDiagnostics.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                currentEmployeeCounter[0] = (long)snapshot.getValue();
+
+                if(currentEmployeeCounter[0] != -1){
+
+                    currentEmployeeCounter[0]+=1;
+
+                    updateValue.setValue(currentEmployeeCounter[0], new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError error, DatabaseReference ref) {
+                            System.out.println("The Employee "
+                                            + currentEmployee.getName() +"has been successfully updated");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+
+        return "s";
+    }
+
+    // TODO: 14/01/2018 test the functin .. sorting elements etc ...
+    public List<TreeDrawingTest> getTreeDrawingTestByEmployee(Employee currentEmployee) throws InterruptedException {
+
+        final Semaphore semaphoreD = new Semaphore(0);
+        final List<TreeDrawingTest> tests = new ArrayList<>();
+
+        Query testByEmployee = myRef.getReference()
+                        .child("DiagnosticsSW")
+                        .child("TreeDrawingTest")
+                        .orderByChild("socialWorkerId")
+                        .equalTo(currentEmployee.getId());
+
+
+        testByEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("All the relevant workers");
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    System.out.println(dataSnapshot);
+                    tests.add(dataSnapshot.getValue(TreeDrawingTest.class));
+
+                    if(tests.size() == snapshot.getChildrenCount())
+                        semaphoreD.release();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+
+        semaphoreD.acquire();
+        return tests;
+
+    }
+
+
+
+
+    public void write(){
+
+        EmployeePerformance employeePerformance =
+                new EmployeePerformance(
+                        "mkrkRMdQsjWsH5YleMiJElRDRdF2",
+                        "ita ben",
+                        0,0,0);
+
+        DatabaseReference df = myRef.getReference().child("EmployeesTrack")
+                                    .child(employeePerformance.getEmpUid());
+
+
+        df.setValue(employeePerformance, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError error, DatabaseReference ref) {
+                System.out.println("done bitch .....");
+            }
+        });
+
+
+
+    }
     public String getCurrentUserUID() {
         return currentUserUID;
     }

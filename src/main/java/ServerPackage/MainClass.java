@@ -2,6 +2,9 @@ package ServerPackage;
 
 import HandlerPackage.FirebaseHandler;
 import HandlerPackage.Welcome;
+import ModulesPackage.Employee;
+import ModulesPackage.Test;
+import ModulesPackage.TreeDrawingTest;
 import org.apache.log4j.BasicConfigurator;
 
 import java.io.FileNotFoundException;
@@ -39,6 +42,19 @@ public class MainClass {
 
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
+
+
+        // FOR TESTING ONLY !!!! //
+
+//        Employee test =
+//                new Employee("-1","SocialWorker"
+//                ,-1,"tst","-1"
+//                ,"-1","-1");
+//
+//
+//        Test test1 = new Test("-1","-1","-1","-1");
+
+        // FOR TESTING ONLY !!!! //
 
 
         // starting to listen to clients //
