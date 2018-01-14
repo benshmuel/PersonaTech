@@ -227,7 +227,7 @@ public class FirebaseHandler {
 
             UserRecord userRecord = FirebaseAuth.getInstance().createUserAsync(request).get();
 
-            //DB issue , need to hold the id inside the emoloyee object
+            //DB issue , need to hold the id inside the employee object
             employee.setuId(userRecord.getUid());
 
 
@@ -354,22 +354,37 @@ public class FirebaseHandler {
     }
 
     // TODO: 14/01/2018  test this function
-    public String addNewDiagnostic (final Employee currentEmployee,String type){
+    public String addNewDiagnostic (final Employee currentEmployee, final String type , Test test){
 
         String testType =type+"DiagCounter";
+        String DiagnosticType = type+"DrawingTest";
 
 
         final long[] currentEmployeeCounter = {-1};
 
         final Query getEmployeeDiagnostics = myRef.getReference()
-                                                .child("EmployeeTrack")
+                                                .child("EmployeesTrack")
                                                 .child(currentEmployee.getuId())
                                                 .child(testType);
 
-        final DatabaseReference updateValue = myRef.getReference().child("EmployeeTrack")
+        final DatabaseReference updateValue = myRef.getReference().child("EmployeesTrack")
                                                             .child(currentEmployee.getuId())
                                                             .child(testType);
 
+
+        DatabaseReference setNewDiagnostic = myRef.getReference()
+                                                    .child("DiagnosticsSW")
+                                                    .child(DiagnosticType);
+
+        setNewDiagnostic.setValue(test, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError error, DatabaseReference ref) {
+                if(error ==null)
+                     System.out.println(type+" Test has been successfully added");
+                else
+                    System.out.println(type+" Test has been unsuccessfully added --- ERROR");
+            }
+        });
 
 
         getEmployeeDiagnostics.addListenerForSingleValueEvent(new ValueEventListener() {

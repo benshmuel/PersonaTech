@@ -161,10 +161,18 @@ public class Welcome extends Thread {
 
                         if (firebaseHandler!=null){
 
+
+                            /**
+                             * getting The relevant data from client side.
+                             * @params type = kind of test
+                             * @params current employee
+                             * @params test = the actual test object
+                             * */
                             String type = (String)objectInputStream.readObject();
                             Employee currentEmployee  = (Employee)objectInputStream.readObject();
+                            Test test = (Test)objectInputStream.readObject();
 
-                            if(firebaseHandler.addNewDiagnostic(currentEmployee,type).equals(FirebaseHandler.SUCCESS)){
+                            if(firebaseHandler.addNewDiagnostic(currentEmployee,type,test).equals(FirebaseHandler.SUCCESS)){
                                 objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
 
                             }
