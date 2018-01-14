@@ -495,7 +495,6 @@ public class FirebaseHandler {
 
 
                     children.add(ds.getValue(Child.class));
-
                     if(children.size() == snapshot.getChildrenCount()) semaphoreChild.release();
                 }
             }

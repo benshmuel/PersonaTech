@@ -191,6 +191,8 @@ public class Welcome extends Thread {
                     case "get childrensByKindergarten" :
 
                         String kindergarten = (String)objectInputStream.readObject();
+                        System.out.println(client +" requested all the childrens from the " + kindergarten +" kindergarten");
+
                         if(firebaseHandler!=null){
 
                             List<Child> childrens = firebaseHandler.getChilderensByKindergarten(kindergarten);

@@ -15,8 +15,8 @@ public class Child implements Serializable {
     private String county;
 
 
-
-
+    public Child() {
+    }
 
     public Child(String kindergarten, String childName, int childAge , String childID , String county) {
         this.kindergarten = kindergarten;
