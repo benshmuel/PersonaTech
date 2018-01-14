@@ -377,7 +377,8 @@ public class FirebaseHandler {
 
         DatabaseReference setNewDiagnostic = myRef.getReference()
                                                     .child("DiagnosticsSW")
-                                                    .child(DiagnosticType);
+                                                    .child(DiagnosticType)
+                                                    .child(currentEmployee.getuId());
 
         setNewDiagnostic.setValue(test, new DatabaseReference.CompletionListener() {
             @Override
