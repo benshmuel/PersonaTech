@@ -198,6 +198,8 @@ public class Welcome extends Thread {
             System.out.println("Oops: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             try {
                 System.out.println("socket is about to close !");

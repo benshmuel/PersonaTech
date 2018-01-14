@@ -354,11 +354,14 @@ public class FirebaseHandler {
     }
 
     // TODO: 14/01/2018  test this function
-    public String addNewDiagnostic (final Employee currentEmployee, final String type , Test test){
+    public String addNewDiagnostic (final Employee currentEmployee, final String type , Test test) throws InterruptedException {
 
         String testType =type+"DiagCounter";
         String DiagnosticType = type+"DrawingTest";
-
+        final Semaphore semaphoreA = new Semaphore(0);
+        final Semaphore semaphoreB = new Semaphore(0);
+        final boolean[] flagUpadte = {false};
+        final boolean[] flagSetNew = { false };
 
         final long[] currentEmployeeCounter = {-1};
 
@@ -379,8 +382,12 @@ public class FirebaseHandler {
         setNewDiagnostic.setValue(test, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError error, DatabaseReference ref) {
-                if(error ==null)
-                     System.out.println(type+" Test has been successfully added");
+                if(error ==null) {
+                    System.out.println(type + " Test has been successfully added");
+                    flagSetNew[0] =true;
+                    semaphoreA.release();
+
+                }
                 else
                     System.out.println(type+" Test has been unsuccessfully added --- ERROR");
             }
@@ -400,8 +407,12 @@ public class FirebaseHandler {
                     updateValue.setValue(currentEmployeeCounter[0], new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError error, DatabaseReference ref) {
-                            System.out.println("The Employee "
-                                            + currentEmployee.getName() +"has been successfully updated");
+                            if(error ==null) {
+                                System.out.println("The Employee "
+                                        + currentEmployee.getName() + "has been successfully updated");
+                                flagUpadte[0] =true;
+                                semaphoreB.release();
+                            }
                         }
                     });
                 }
@@ -414,8 +425,11 @@ public class FirebaseHandler {
         });
 
 
+        semaphoreA.acquire();
+        semaphoreB.acquire();
 
-        return "s";
+        if(flagSetNew[0] && flagUpadte[0]) return SUCCESS;
+        else return FAIL;
     }
 
     // TODO: 14/01/2018 test the functin .. sorting elements etc ...
