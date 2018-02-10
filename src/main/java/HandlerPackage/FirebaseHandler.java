@@ -354,10 +354,10 @@ public class FirebaseHandler {
     }
 
     // TODO: 14/01/2018  test this function
-    public String addNewDiagnostic (final Employee currentEmployee, final String type , Test test) throws InterruptedException {
+    public String addNewDiagnostic (final Employee currentEmployee, final String testType , Test test) throws InterruptedException {
 
-        String testType =type+"DiagCounter";
-        String DiagnosticType = type+"DrawingTest";
+        String test_Type =testType+"DiagCounter";
+        String DiagnosticType = testType+"DrawingTest";
         final Semaphore semaphoreA = new Semaphore(0);
         final Semaphore semaphoreB = new Semaphore(0);
         final boolean[] flagUpadte = {false};
@@ -378,19 +378,20 @@ public class FirebaseHandler {
         DatabaseReference setNewDiagnostic = myRef.getReference()
                                                     .child("DiagnosticsSW")
                                                     .child(DiagnosticType)
-                                                    .child(currentEmployee.getuId());
+                                                    .child(currentEmployee.getuId())
+                                                    .child(test.getTestId());
 
         setNewDiagnostic.setValue(test, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError error, DatabaseReference ref) {
                 if(error ==null) {
-                    System.out.println(type + " Test has been successfully added");
+                    System.out.println(testType + " Test has been successfully added");
                     flagSetNew[0] =true;
                     semaphoreA.release();
 
                 }
                 else
-                    System.out.println(type+" Test has been unsuccessfully added --- ERROR");
+                    System.out.println(testType+" Test has been unsuccessfully added --- ERROR");
             }
         });
 
@@ -434,27 +435,24 @@ public class FirebaseHandler {
     }
 
     // TODO: 14/01/2018 test the functin .. sorting elements etc ...
-    public List<TreeDrawingTest> getTreeDrawingTestByEmployee(Employee currentEmployee) throws InterruptedException {
+    public List<Test> getDiagnostics(Employee currentEmployee , String testType) throws InterruptedException {
 
         final Semaphore semaphoreD = new Semaphore(0);
-        final List<TreeDrawingTest> tests = new ArrayList<>();
+        final List<Test> tests = new ArrayList<>();
 
         Query testByEmployee = myRef.getReference()
                         .child("DiagnosticsSW")
-                        .child("TreeDrawingTest")
-                        .orderByChild("socialWorkerId")
-                        .equalTo(currentEmployee.getId());
+                        .child(testType+"DrawingTest")
+                        .child(currentEmployee.getuId());
 
 
         testByEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("All the relevant workers");
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    System.out.println(dataSnapshot);
-                    tests.add(dataSnapshot.getValue(TreeDrawingTest.class));
+                    tests.add(dataSnapshot.getValue(Test.class));
 
                     if(tests.size() == snapshot.getChildrenCount())
                         semaphoreD.release();

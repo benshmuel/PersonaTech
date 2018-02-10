@@ -41,20 +41,11 @@ public class MainClass {
         System.out.println("**************************************************************");
 
 
+        for(int i=0;i<10;i++)
+            System.out.println("\n");
+
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
-
-        // FOR TESTING ONLY !!!! //
-
-//        Employee test =
-//                new Employee("-1","SocialWorker"
-//                ,-1,"tst","-1"
-//                ,"-1","-1");
-//
-//
-//        Test test1 = new Test("-1","-1","-1","-1");
-
-        // FOR TESTING ONLY !!!! //
 
 
         // starting to listen to clients //
