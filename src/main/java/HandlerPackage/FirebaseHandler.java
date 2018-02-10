@@ -368,11 +368,11 @@ public class FirebaseHandler {
         final Query getEmployeeDiagnostics = myRef.getReference()
                                                 .child("EmployeesTrack")
                                                 .child(currentEmployee.getuId())
-                                                .child(testType);
+                                                .child(test_Type);
 
         final DatabaseReference updateValue = myRef.getReference().child("EmployeesTrack")
                                                             .child(currentEmployee.getuId())
-                                                            .child(testType);
+                                                            .child(test_Type);
 
 
         DatabaseReference setNewDiagnostic = myRef.getReference()
