@@ -121,7 +121,7 @@ public class Welcome extends Thread {
 
                         LoginClass loginCredentials =(LoginClass)objectInputStream.readObject();
                         Employee employeeToAdd = (Employee)objectInputStream.readObject();
-
+                        System.out.println("\n");
                         System.out.println("The Client " + client +" requested to add new Employee ");
                         System.out.println("Employee information :: " + employeeToAdd.toString());
                         if(firebaseHandler!=null){
@@ -142,9 +142,20 @@ public class Welcome extends Thread {
 
 
 
+                    case "get Employees" :
+                        if(firebaseHandler!=null){
+                            System.out.println("\n");
+                            System.out.println("The Client " + client +" requested all employees  ");
+
+                            objectOutputStream.writeObject(firebaseHandler.getEmployees());
+
+                        }
+                        break;
+
                     case "get EmployeeStatistics" :
                         if (firebaseHandler!=null){
 
+                            System.out.println("\n");
                             System.out.println("The Client " + client +" requested all employees statistics ");
                             try {
                                 List<EmployeePerformance> statistics = firebaseHandler.getEmployeePerformance();
