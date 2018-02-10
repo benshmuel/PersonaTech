@@ -434,8 +434,7 @@ public class FirebaseHandler {
         else return FAIL;
     }
 
-    // TODO: 14/01/2018 test the functin .. sorting elements etc ...
-    public List<Test> getDiagnostics(Employee currentEmployee , String testType) throws InterruptedException {
+    public List<Test> getDiagnostics(String currentEmployee , String testType) throws InterruptedException {
 
         final Semaphore semaphoreD = new Semaphore(0);
         final List<Test> tests = new ArrayList<>();
@@ -443,7 +442,7 @@ public class FirebaseHandler {
         Query testByEmployee = myRef.getReference()
                         .child("DiagnosticsSW")
                         .child(testType+"DrawingTest")
-                        .child(currentEmployee.getuId());
+                        .child(currentEmployee);
 
 
         testByEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -544,6 +543,7 @@ public class FirebaseHandler {
         return employees;
 
     }
+
 
     public void write(){
 

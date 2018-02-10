@@ -173,10 +173,14 @@ public class Welcome extends Thread {
 
 
 
-                    case "Get Diagnostic":
+                    case "get TestBy_Type_Employee":
+
+                        break;
+
+                    case "get Diagnostic":
                         if(firebaseHandler!=null){
                             String type = (String)objectInputStream.readObject();
-                            Employee currentEmployee  = (Employee)objectInputStream.readObject();
+                            String currentEmployee  = (String) objectInputStream.readObject();
                             objectOutputStream.writeObject(firebaseHandler.getDiagnostics(currentEmployee,type));
 
                         }
