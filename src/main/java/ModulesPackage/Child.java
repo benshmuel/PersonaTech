@@ -83,7 +83,7 @@ public class Child implements Serializable {
         List<String> s = new ArrayList<>();
         for (Picture p: this.pictures) {
 
-            if(type.equals(p.getType()) && !p.getTested()) {
+            if(type.equals(p.getType()) && !p.getIsTested()) {
 
                 s.add(p.getPictureId());
 
