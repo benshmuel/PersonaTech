@@ -445,11 +445,11 @@ public class FirebaseHandler {
                         .child(currentEmployee);
 
 
-
         testByEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount() == 0) semaphoreD.release();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                     if(testType.equals("tree"))
@@ -468,8 +468,11 @@ public class FirebaseHandler {
 
             @Override
             public void onCancelled(DatabaseError error) {
+                semaphoreD.release();
 
             }
+
+
         });
 
 
