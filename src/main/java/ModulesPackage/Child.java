@@ -17,18 +17,18 @@ public class Child implements Serializable {
     private String county;
 
     private List<Picture> pictures;
-
     public Child() {
     }
 
-    public Child(String kindergarten, String childName, int childAge , String childID , String county ) {
+    public Child(String kindergarten, String childName, int childAge, String childID, String county) {
         this.kindergarten = kindergarten;
         this.childName = childName;
         this.childAge = childAge;
         this.childID = childID;
         this.county = county;
-        this.pictures = new ArrayList<Picture>();
+        this.pictures = new ArrayList<>();
     }
+
 
     public String getKindergarten() {
         return kindergarten;
@@ -78,16 +78,22 @@ public class Child implements Serializable {
         this.pictures = pictures;
     }
 
-    public List<String> getPicIdOfChild(){
+    public List<String> getPicIdOfChild(String type){
 
         List<String> s = new ArrayList<>();
         for (Picture p: this.pictures) {
 
-            s.add(p.getPictureId());
+            if(type.equals(p.getType()) && !p.getTested()) {
+
+                s.add(p.getPictureId());
+
+            }
 
         }
         return s;
     }
+
+
 
     public String getPicUrlByPicId(String pid){
 
@@ -101,6 +107,20 @@ public class Child implements Serializable {
         return null;
 
     }
+
+    public Picture getPicByPicId(String pid){
+
+        for (Picture p: this.pictures) {
+
+            if(p.getPictureId().equals(pid))
+
+                return p;
+
+        }
+        return null;
+
+    }
+
     public String toString(){
 
         return getClass().getName() + " kindergarten name = " + this.getKindergarten() + " child name = "
