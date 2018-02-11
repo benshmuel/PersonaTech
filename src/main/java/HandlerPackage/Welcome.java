@@ -179,6 +179,8 @@ public class Welcome extends Thread {
 
                     case "get Diagnostic":
                         if(firebaseHandler!=null){
+                            System.out.println("The Client " + client +" requested all employees Diagnostics ");
+
                             String type = (String)objectInputStream.readObject();
                             String currentEmployee  = (String) objectInputStream.readObject();
                             objectOutputStream.writeObject(firebaseHandler.getDiagnostics(currentEmployee,type));

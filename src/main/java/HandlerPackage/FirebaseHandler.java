@@ -434,7 +434,7 @@ public class FirebaseHandler {
         else return FAIL;
     }
 
-    public List<Test> getDiagnostics(String currentEmployee , String testType) throws InterruptedException {
+    public List<Test> getDiagnostics(String currentEmployee , final String testType) throws InterruptedException {
 
         final Semaphore semaphoreD = new Semaphore(0);
         final List<Test> tests = new ArrayList<>();
@@ -445,13 +445,21 @@ public class FirebaseHandler {
                         .child(currentEmployee);
 
 
+
         testByEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    tests.add(dataSnapshot.getValue(Test.class));
+                    if(testType.equals("tree"))
+                        tests.add(dataSnapshot.getValue(TreeDrawingTest.class));
+                    else if (testType.equals("house"))
+                        tests.add(dataSnapshot.getValue(HouseDrawingTest.class));
+                    else  if(testType.equals("person"))
+                        tests.add(dataSnapshot.getValue(PersonDrawingTest.class));
+
+
 
                     if(tests.size() == snapshot.getChildrenCount())
                         semaphoreD.release();
