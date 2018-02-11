@@ -21,7 +21,7 @@ public class Child implements Serializable {
     public Child() {
     }
 
-    public Child(String kindergarten, String childName, int childAge , String childID , String county) {
+    public Child(String kindergarten, String childName, int childAge , String childID , String county ) {
         this.kindergarten = kindergarten;
         this.childName = childName;
         this.childAge = childAge;
