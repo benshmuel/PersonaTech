@@ -522,7 +522,8 @@ public class FirebaseHandler {
 
         final List<Employee> employees = new ArrayList<>();
         Query getEmployees = myRef.getReference()
-                .child("Employees");
+                .child("Employees")
+                .orderByChild("userType").equalTo("SocialWorker");
 
         getEmployees.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
