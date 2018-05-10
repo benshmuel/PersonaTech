@@ -540,6 +540,7 @@ public class FirebaseHandler {
 
                     Child child = ds.getValue(Child.class);
                     System.out.println(child.getChildName());
+                    System.out.println("---");
                     children.add(child.getChildName());
 
                     if(children.size() == snapshot.getChildrenCount()) semaphoreChild.release();
