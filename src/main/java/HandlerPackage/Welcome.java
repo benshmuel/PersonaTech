@@ -238,6 +238,23 @@ public class Welcome extends Thread {
 
 
                         break;
+
+
+                    case "get childerNamesByKindergarten":
+
+                        String kindergarten_name = (String)objectInputStream.readObject();
+                        System.out.println(client +" requested all the children names from the " + kindergarten_name +" kindergarten");
+                        if(firebaseHandler!=null){
+                            List<String> childrenNamesList = firebaseHandler.getChilderenNamesByKindergarten(kindergarten_name);
+                            objectOutputStream.writeObject(childrenNamesList);
+
+                        }
+                        else
+                        {
+                            objectOutputStream.writeObject(FirebaseHandler.FAIL);
+
+                        }
+                        break;
                 }
 
 

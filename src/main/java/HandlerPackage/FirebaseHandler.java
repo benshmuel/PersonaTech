@@ -520,6 +520,53 @@ public class FirebaseHandler {
 
     }
 
+
+    public List<String> getChilderenNamesByKindergarten(String kindergarten) throws InterruptedException {
+
+        final List<String> children = new ArrayList<>();
+        final Semaphore semaphoreChild = new Semaphore(0);
+
+        Query getChildrens = myRef.getReference()
+                .child("Kindergartens")
+                .child(kindergarten)
+                .child("Childrens");
+
+        getChildrens.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+
+                for(DataSnapshot ds : snapshot.getChildren()){
+
+                    if(ds.getValue()!=null) {
+                        Child child = ds.getValue(Child.class);
+                        children.add(child.getChildName());
+                    }
+                    if(children.size() == snapshot.getChildrenCount()) semaphoreChild.release();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+
+
+        semaphoreChild.acquire();
+        return children;
+
+    }
+
+
+
+
+
+
+
+
     public List<Employee> getEmployees () throws InterruptedException {
         final Semaphore semaphoreEmp = new Semaphore(0);
 
