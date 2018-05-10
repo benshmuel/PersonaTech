@@ -538,10 +538,10 @@ public class FirebaseHandler {
 
                 for(DataSnapshot ds : snapshot.getChildren()){
 
-                    if(ds.getValue()!=null) {
-                        Child child = ds.getValue(Child.class);
-                        children.add(child.getChildName());
-                    }
+                    Child child = ds.getValue(Child.class);
+                    System.out.println(child.getChildName());
+                    children.add(child.getChildName());
+
                     if(children.size() == snapshot.getChildrenCount()) semaphoreChild.release();
                 }
             }

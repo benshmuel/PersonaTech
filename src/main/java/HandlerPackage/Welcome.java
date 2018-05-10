@@ -240,7 +240,7 @@ public class Welcome extends Thread {
                         break;
 
 
-                    case "get childerNamesByKindergarten":
+                    case "get childerNamesBycKindergarten":
 
                         String kindergarten_name = (String)objectInputStream.readObject();
                         System.out.println(client +" requested all the children names from the " + kindergarten_name +" kindergarten");
