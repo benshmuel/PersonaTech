@@ -245,7 +245,7 @@ public class Welcome extends Thread {
                         String kindergarten_name = (String)objectInputStream.readObject();
                         System.out.println(client +" requested all the children names from the " + kindergarten_name +" kindergarten");
                         if(firebaseHandler!=null){
-                            List<String> childrenNamesList = firebaseHandler.getChilderenNamesByKindergarten(kindergarten_name);
+                            Map<String,String>childrenNamesList = firebaseHandler.getChilderenNamesByKindergarten(kindergarten_name);
                             objectOutputStream.writeObject(childrenNamesList);
 
                         }

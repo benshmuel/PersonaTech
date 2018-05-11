@@ -521,9 +521,9 @@ public class FirebaseHandler {
     }
 
 
-    public List<String> getChilderenNamesByKindergarten(String kindergarten) throws InterruptedException {
+    public Map<String,String> getChilderenNamesByKindergarten(String kindergarten) throws InterruptedException {
 
-        final List<String> children = new ArrayList<>();
+        final Map<String,String> children = new HashMap<>();
         final Semaphore semaphoreChild = new Semaphore(0);
 
         Query getChildrens = myRef.getReference()
@@ -541,7 +541,7 @@ public class FirebaseHandler {
                     Child child = ds.getValue(Child.class);
                     System.out.println(child.getChildName());
                     System.out.println("---");
-                    children.add(child.getChildName());
+                    children.put(child.getChildName(),child.getChildID());
 
                     if(children.size() == snapshot.getChildrenCount()) semaphoreChild.release();
                 }
