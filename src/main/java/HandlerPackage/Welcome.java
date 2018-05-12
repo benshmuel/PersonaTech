@@ -231,6 +231,7 @@ public class Welcome extends Thread {
 
                             List<Child> childrens = firebaseHandler.getChilderensByKindergarten(kindergarten);
                             objectOutputStream.writeObject(childrens);
+                            System.out.println("success with children");
 
                         }
                         else
