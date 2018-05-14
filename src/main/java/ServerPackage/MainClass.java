@@ -7,8 +7,7 @@ import ModulesPackage.Test;
 import ModulesPackage.TreeDrawingTest;
 import org.apache.log4j.BasicConfigurator;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +38,24 @@ public class MainClass {
         System.out.println("Current Server Time : " + sdf.format(cal.getTime()));
         System.out.println("**************************************************************");
         System.out.println("**************************************************************");
+
+
+        try {
+
+
+            String prg = "import sys";
+            String path = "/Users/benshmuel/Documents/Persona/PersonaTech/PythonFiles/run.py";
+//            BufferedWriter out = new BufferedWriter(new FileWriter(path));
+//            out.write(prg);
+//            out.write("print(\"f\")");
+//            out.close();
+            Process p = Runtime.getRuntime().exec("python"+ " "+path);
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String ret = in.readLine();
+            System.out.println("value is : " + ret);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         for(int i=0;i<10;i++)
