@@ -53,8 +53,9 @@ public class MainClass {
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while (true){
                 final String ret = in.readLine();
-                System.out.println("value is : " + ret);
                 if(ret == null) break;
+                System.out.println("value is : " + ret);
+
 
             }
         } catch (IOException e) {
