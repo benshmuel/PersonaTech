@@ -270,7 +270,7 @@ public class Welcome extends Thread {
 
                             try {
                                 // trying to open json //
-                                Object object = parser.parse(new FileReader("/data.json"));
+                                Object object = parser.parse(new FileReader("data.json"));
                                 JSONObject jsonObject = (JSONObject) object;
 
                                 /**
