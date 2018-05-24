@@ -42,7 +42,6 @@ public class MainClass {
 
         try {
 
-
             String prg = "import sys";
             String path = "/home/personaitaben/PersonaPyEngine/MainModule/MainEngine.py";
             String args1 = "-o str -i \"https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b\"";
@@ -52,8 +51,12 @@ public class MainClass {
 //            out.close();
             Process p = Runtime.getRuntime().exec("python3"+ " "+path + args1);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String ret = in.readLine();
-            System.out.println("value is : " + ret);
+            while (true){
+                final String ret = in.readLine();
+                System.out.println("value is : " + ret);
+                if(ret == null) break;
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
