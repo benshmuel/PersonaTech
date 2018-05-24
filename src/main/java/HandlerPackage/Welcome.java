@@ -278,9 +278,11 @@ public class Welcome extends Thread {
                                  * */
 
                                 System.out.println(" ---- Json ----");
-                                System.out.println(jsonObject.get(""));
-                                System.out.println(jsonObject.get(""));
-                                System.out.println(jsonObject.get(""));
+                                System.out.println(jsonObject);
+                                System.out.println(jsonObject.get("image_name"));
+                                System.out.println(jsonObject.get("width"));
+                                System.out.println(jsonObject.get("height"));
+                                System.out.println(jsonObject.get("segments"));
                                 System.out.println("-----------------");
 
 

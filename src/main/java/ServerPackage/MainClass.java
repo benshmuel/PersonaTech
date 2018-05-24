@@ -39,30 +39,30 @@ public class MainClass {
         System.out.println("**************************************************************");
         System.out.println("**************************************************************");
 
-
-        try {
-
-            String prg = "import sys";
-            String path = "/home/personaitaben/PersonaPyEngine/MainModule/MainEngine.py";
-            String args1 = "-o \"str\" -i \"https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b\"";
-            String args2 = "-o \"str\" -i https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b";
-//            BufferedWriter out = new BufferedWriter(new FileWriter(path));
-//            out.write(prg);
-//            out.write("print(\"f\")");
-//            out.close();
-            Process p = Runtime.getRuntime().exec("python3"+ " "+path+ " "+ args2);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while (true){
-                final String ret = in.readLine();
-                if(ret == null) break;
-                System.out.println("value is : " + ret);
-
-
-            }
-            System.out.println("------ Done ----------");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+//
+//            String prg = "import sys";
+//            String path = "/home/personaitaben/PersonaPyEngine/MainModule/MainEngine.py";
+//            String args1 = "-o \"str\" -i \"https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b\"";
+//            String args2 = "-o \"str\" -i https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b";
+////            BufferedWriter out = new BufferedWriter(new FileWriter(path));
+////            out.write(prg);
+////            out.write("print(\"f\")");
+////            out.close();
+//            Process p = Runtime.getRuntime().exec("python3"+ " "+path+ " "+ args2);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//            while (true){
+//                final String ret = in.readLine();
+//                if(ret == null) break;
+//                System.out.println("value is : " + ret);
+//
+//
+//            }
+//            System.out.println("------ Done ----------");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         for(int i=0;i<10;i++)
