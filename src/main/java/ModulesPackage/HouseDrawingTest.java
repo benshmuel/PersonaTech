@@ -1,5 +1,7 @@
 package ModulesPackage;
 
+import org.json.simple.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -32,6 +34,10 @@ public class HouseDrawingTest extends Test implements Serializable {
 
     public HouseDrawingTest() {
 
+    }
+
+    public void updateTest(JSONObject object){
+        super.setJsonEngine(object);
     }
 
     public HouseDrawingTest(String testId, String socialWorkerId, String childId, String pictureId, Picture refToPicture,

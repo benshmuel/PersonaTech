@@ -354,7 +354,7 @@ public class FirebaseHandler {
     }
 
     // TODO: 14/01/2018  test this function
-    public String addNewDiagnostic (final Employee currentEmployee, final String testType , Test test) throws InterruptedException {
+    public String addNewDiagnostic(final Employee currentEmployee, final String testType, Test test) throws InterruptedException {
 
         String test_Type =testType+"DiagCounter";
         String DiagnosticType = testType+"DrawingTest";
