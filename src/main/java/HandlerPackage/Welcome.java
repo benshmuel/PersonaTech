@@ -1,7 +1,11 @@
 package HandlerPackage;
 
 import ModulesPackage.*;
+import org.json.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,6 +18,7 @@ public class Welcome extends Thread {
     private Socket socket;
     private Employee currentEmployee; // stoped here
     private FirebaseHandler firebaseHandler ;
+    private JSONObject jsonObjectHolder=null;
 
     public Welcome(Socket socket ,FirebaseHandler firebaseHandler) {
         this.socket = socket;
@@ -256,6 +261,47 @@ public class Welcome extends Thread {
 
                         }
                         break;
+
+
+
+
+                        case "checkJson":
+                            JSONParser parser = new JSONParser();
+
+                            try {
+                                // trying to open json //
+                                Object object = parser.parse(new FileReader("/data.json"));
+                                JSONObject jsonObject = (JSONObject) object;
+
+                                /**
+                                 * prints to make sure json is fine .. will be deleted later
+                                 * */
+
+                                System.out.println(" ---- Json ----");
+                                System.out.println(jsonObject.get(""));
+                                System.out.println(jsonObject.get(""));
+                                System.out.println(jsonObject.get(""));
+                                System.out.println("-----------------");
+
+
+                                jsonObjectHolder = jsonObject; // save it for later //
+
+                                // need to send the json back to the client ..//
+                                objectOutputStream.writeObject(jsonObject); // TODO: 24/05/2018 check if json is seriliazed
+
+
+
+
+                            }catch (Exception e){
+                                System.out.println("--- Error with json handling ...");
+                                objectOutputStream.writeObject(FirebaseHandler.FAIL);
+                                e.printStackTrace();
+                            }
+
+
+
+                            break;
+
                 }
 
 
