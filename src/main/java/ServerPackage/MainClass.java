@@ -44,12 +44,12 @@ public class MainClass {
 
             String prg = "import sys";
             String path = "/home/personaitaben/PersonaPyEngine/MainModule/MainEngine.py";
-            String args1 = "-o str -i \"https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b\"";
+           // String args1 = "-o str -i \"https://firebasestorage.googleapis.com/v0/b/photos-40b3a.appspot.com/o/im.jpg?alt=media&token=09bae7d9-e0da-4b73-a1b0-47f5a9766a4b\"";
 //            BufferedWriter out = new BufferedWriter(new FileWriter(path));
 //            out.write(prg);
 //            out.write("print(\"f\")");
 //            out.close();
-            Process p = Runtime.getRuntime().exec("python3"+ " "+path + args1);
+            Process p = Runtime.getRuntime().exec("python3"+ " "+path /*+ args1*/);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while (true){
                 final String ret = in.readLine();
