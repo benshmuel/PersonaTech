@@ -25,7 +25,9 @@ public class ImageCanvas implements Serializable {
     }
 
     public void writeObject(ObjectOutputStream out) throws IOException {
-        //out.defaultWriteObject();
+        //
+
+        out.defaultWriteObject();
         out.writeInt(images.size()); // how many images are serialized?
         for (BufferedImage eachImage : images) {
             ImageIO.write(eachImage, "png", out); // png
