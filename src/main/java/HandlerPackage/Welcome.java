@@ -360,9 +360,6 @@ public class Welcome extends Thread {
                             for(BufferedImage image :images){
 
                                 System.out.println(image);
-
-
-
                             }
 
 
