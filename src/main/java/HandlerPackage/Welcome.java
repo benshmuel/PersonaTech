@@ -269,7 +269,6 @@ public class Welcome extends Thread {
 
                             }
 
-                            Thread.sleep(5000);
                             System.out.println("------ Done ----------");
                             p.destroy();
 
@@ -285,28 +284,64 @@ public class Welcome extends Thread {
                             Object object = parser.parse(new FileReader("data.json"));
                             JSONObject jsonObject = (JSONObject) object;
 
-                            /**
-                             * prints to make sure json is fine .. will be deleted later
-                             * */
-
-                            System.out.println(" ---- Json ----");
-                            System.out.println(jsonObject);
-                            System.out.println(jsonObject.get("image_name"));
-                            System.out.println(jsonObject.get("width"));
-                            System.out.println(jsonObject.get("height"));
-                            System.out.println(jsonObject.get("segments"));
-                            System.out.println("-----------------");
-
-
-
-
-
-
                             jsonObjectHolder = jsonObject; // save it for later //
 
                             // need to send the json back to the client ..//
                             objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
-                            objectOutputStream.writeObject(jsonObject); // TODO: 24/05/2018 check if json is seriliazed
+                            objectOutputStream.writeObject(jsonObject);
+
+
+                            String image = jsonObject.get("image_name").toString();
+
+                            String[] splited = image.split(".");
+                            //path to the directory//
+                            String path = "/home/personaitaben/PersonaPyEngine/predict/"+splited[0];
+                            List<BufferedImage> images = new ArrayList<>();
+
+                            ImageLoader loader = new ImageLoader(path);
+
+
+                            if (loader.dir.isDirectory()) { // make sure it's a directory
+                                for (final File f : loader.dir.listFiles(loader.IMAGE_FILTER)) {
+                                    BufferedImage img = null;
+
+                                    try {
+                                        img = ImageIO.read(f);
+
+                                        images.add(img);
+
+
+                                    } catch (final IOException e) {
+                                        // handle errors here
+                                    }
+
+
+
+                                }
+
+
+
+                                objectOutputStream.writeInt(images.size());
+
+                                for(BufferedImage bufferedImage : images){
+                                    ByteArrayOutputStream bufferStream = new ByteArrayOutputStream();
+                                    ImageIO.write(bufferedImage, "png", bufferStream);
+                                    byte[] bufferedBytes = bufferStream.toByteArray();
+                                    objectOutputStream.writeObject(bufferedBytes);
+
+
+                                }
+
+
+
+
+//
+//
+                            }
+                            else System.out.println(path +" Is not a directory ");
+
+
+                            System.out.println("done " + images.size());
 
 
                         } catch (Exception e) {
@@ -319,72 +354,6 @@ public class Welcome extends Thread {
                         break;
 
 
-                    case "test":
-
-
-                        List<BufferedImage> images = new ArrayList<>();
-
-                        ImageLoader loader = new ImageLoader("/home/personaitaben/PersonaPyEngine/predict/Photos%2F2412f907-e8ad-4a7a-bb9f-0dbbedb0bb7a");
-                        if (loader.dir.isDirectory()) { // make sure it's a directory
-                            for (final File f : loader.dir.listFiles(loader.IMAGE_FILTER)) {
-                                BufferedImage img = null;
-
-                                try {
-                                    img = ImageIO.read(f);
-
-                                    // you probably want something more involved here
-                                    // to display in your UI
-                                    System.out.println("image: " + f.getName());
-                                    System.out.println(" width : " + img.getWidth());
-                                    System.out.println(" height: " + img.getHeight());
-                                    System.out.println(" size  : " + f.length());
-
-
-
-                                    System.out.println("name :: ");
-                                    System.out.println(Arrays.toString(img.getPropertyNames()));
-
-                                    images.add(img);
-
-
-                                } catch (final IOException e) {
-                                    // handle errors here
-                                }
-
-
-
-                            }
-
-
-                            System.out.println("Internal check : ");
-                            for(BufferedImage image :images){
-
-                                System.out.println(image);
-                            }
-
-                            objectOutputStream.writeInt(images.size());
-
-                            for(BufferedImage image : images){
-                                ByteArrayOutputStream bufferStream = new ByteArrayOutputStream();
-                                ImageIO.write(image, "png", bufferStream);
-                                byte[] bufferedBytes = bufferStream.toByteArray();
-                                objectOutputStream.writeObject(bufferedBytes);
-
-
-                            }
-
-
-
-                            System.out.println("done !");
-                            System.out.println("Total images to Itamar : "+images.size());
-
-//
-//                            ImageCanvas canvas = new ImageCanvas(images);
-//                            //send images + size
-//                            canvas.writeObject(objectOutputStream);
-                        }
-
-                        break;
 
                 }
 
