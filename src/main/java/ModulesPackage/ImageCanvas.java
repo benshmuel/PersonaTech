@@ -32,9 +32,9 @@ public class ImageCanvas implements Serializable {
         out.writeInt(images.size()); // how many images are serialized?
         int count =0;
         for (BufferedImage eachImage : images) {
-            if(count>0)
-                ImageIO.write(eachImage, "png", out); // png
-            count++;
+
+            ImageIO.write(eachImage, "png", out); // png
+
 
         }
     }

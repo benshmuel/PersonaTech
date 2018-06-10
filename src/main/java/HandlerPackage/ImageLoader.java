@@ -11,8 +11,7 @@ public class ImageLoader {
     static File dir = null;
 
     // array of supported extensions (use a List if you prefer)
-    static final String[] EXTENSIONS = new String[]{
-            "gif", "png", "bmp" // and other formats you need
+    static final String[] EXTENSIONS = new String[]{"png"// and other formats you need
     };
     // filter to identify images based on their extensions
     static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
