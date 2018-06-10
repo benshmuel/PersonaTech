@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
@@ -294,6 +296,10 @@ public class Welcome extends Thread {
                             System.out.println("-----------------");
 
 
+
+
+
+
                             jsonObjectHolder = jsonObject; // save it for later //
 
                             // need to send the json back to the client ..//
@@ -307,6 +313,32 @@ public class Welcome extends Thread {
                             e.printStackTrace();
                         }
 
+
+                        break;
+
+
+                    case "test":
+
+
+                        ImageLoader loader = new ImageLoader("/home/personaitaben/PersonaPyEngine/predict/Photos%2F2412f907-e8ad-4a7a-bb9f-0dbbedb0bb7a");
+                        if (loader.dir.isDirectory()) { // make sure it's a directory
+                            for (final File f : loader.dir.listFiles(loader.IMAGE_FILTER)) {
+                                BufferedImage img = null;
+
+                                try {
+                                    img = ImageIO.read(f);
+
+                                    // you probably want something more involved here
+                                    // to display in your UI
+                                    System.out.println("image: " + f.getName());
+                                    System.out.println(" width : " + img.getWidth());
+                                    System.out.println(" height: " + img.getHeight());
+                                    System.out.println(" size  : " + f.length());
+                                } catch (final IOException e) {
+                                    // handle errors here
+                                }
+                            }
+                        }
 
                         break;
 
