@@ -293,9 +293,13 @@ public class Welcome extends Thread {
 
                             String image = jsonObject.get("image_name").toString();
 
+                            System.out.println("image name :: " +image);
+
                             String[] splited = image.split(".");
                             //path to the directory//
-                            String path = "/home/personaitaben/PersonaPyEngine/predict/"+splited[0];
+                            String path="";
+                            if(splited.length>0)
+                                 path = "/home/personaitaben/PersonaPyEngine/predict/"+splited[0];
                             List<BufferedImage> images = new ArrayList<>();
 
                             ImageLoader loader = new ImageLoader(path);
