@@ -344,6 +344,8 @@ public class Welcome extends Thread {
                                     System.out.println("name :: ");
                                     System.out.println(Arrays.toString(img.getPropertyNames()));
 
+                                    images.add(img);
+
 
                                 } catch (final IOException e) {
                                     // handle errors here
