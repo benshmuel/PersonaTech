@@ -271,9 +271,9 @@ public class Welcome extends Thread {
                             String url = (String) objectInputStream.readObject();
 
 
-
+                            System.out.println("Asking for Engine !!");
                             try {
-                            Process p = Runtime.getRuntime().exec("python3"+ " "+PATH+ " "+ PYTHON_ARGS+url);
+                            Process p = Runtime.getRuntime().exec("python3"+ " "+PATH+ " "+ PYTHON_ARGS+" "+url);
                             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
                             while (true){
                                 final String ret = in.readLine();
