@@ -264,7 +264,10 @@ public class Welcome extends Thread {
 
 
                             }
+
+                            Thread.sleep(5000);
                             System.out.println("------ Done ----------");
+                            p.destroy();
 
                         } catch (IOException e) {
                             e.printStackTrace();
