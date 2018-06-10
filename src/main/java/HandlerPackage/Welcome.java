@@ -295,7 +295,7 @@ public class Welcome extends Thread {
 
                             System.out.println("image name :: " +image);
 
-                            String[] splited = image.split(".");
+                            String[] splited = image.split("\\.");
                             //path to the directory//
                             String path="";
                             if(splited.length>0)
