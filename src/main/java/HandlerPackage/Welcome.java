@@ -356,6 +356,16 @@ public class Welcome extends Thread {
                             }
 
 
+                            System.out.println("Internal check : ");
+                            for(BufferedImage image :images){
+
+                                System.out.println(image);
+
+
+
+                            }
+
+
                             System.out.println("done !");
                             System.out.println("Total images to Itamar : "+images.size());
                             objectOutputStream.writeInt(images.size());
