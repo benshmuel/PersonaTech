@@ -341,10 +341,6 @@ public class Welcome extends Thread {
 
 
 
-                                    if(img!=null)
-                                        images.add(img);
-                                    else System.out.println("#### IMAGE IS NULL #####");
-
                                     System.out.println("name :: ");
                                     System.out.println(Arrays.toString(img.getPropertyNames()));
 
@@ -364,14 +360,26 @@ public class Welcome extends Thread {
                                 System.out.println(image);
                             }
 
+                            objectOutputStream.writeInt(images.size());
+
+                            for(BufferedImage image : images){
+                                ByteArrayOutputStream bufferStream = new ByteArrayOutputStream();
+                                ImageIO.write(image, "png", bufferStream);
+                                byte[] bufferedBytes = bufferStream.toByteArray();
+                                objectOutputStream.writeObject(bufferedBytes);
+
+
+                            }
+
+
 
                             System.out.println("done !");
                             System.out.println("Total images to Itamar : "+images.size());
 
-
-                            ImageCanvas canvas = new ImageCanvas(images);
-                            //send images + size
-                            canvas.writeObject(objectOutputStream);
+//
+//                            ImageCanvas canvas = new ImageCanvas(images);
+//                            //send images + size
+//                            canvas.writeObject(objectOutputStream);
                         }
 
                         break;
