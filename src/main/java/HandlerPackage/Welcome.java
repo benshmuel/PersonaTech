@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -320,6 +321,8 @@ public class Welcome extends Thread {
                     case "test":
 
 
+                        List<BufferedImage> images = new ArrayList<>();
+
                         ImageLoader loader = new ImageLoader("/home/personaitaben/PersonaPyEngine/predict/Photos%2F2412f907-e8ad-4a7a-bb9f-0dbbedb0bb7a");
                         if (loader.dir.isDirectory()) { // make sure it's a directory
                             for (final File f : loader.dir.listFiles(loader.IMAGE_FILTER)) {
@@ -334,9 +337,22 @@ public class Welcome extends Thread {
                                     System.out.println(" width : " + img.getWidth());
                                     System.out.println(" height: " + img.getHeight());
                                     System.out.println(" size  : " + f.length());
+
+
+
+                                    images.add(img);
+
+
                                 } catch (final IOException e) {
                                     // handle errors here
                                 }
+
+
+                                System.out.println("done !");
+                                System.out.println("Total images to Itamar : "+images.size());
+                                objectOutputStream.writeObject(images);
+
+
                             }
                         }
 
