@@ -1,5 +1,7 @@
 package ModulesPackage;
 
+import org.json.simple.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -36,6 +38,10 @@ public class TreeDrawingTest extends Test implements Serializable{
 
     public TreeDrawingTest() {
 
+    }
+
+    public void updateTest(JSONObject object){
+        super.setJsonEngine(object);
     }
 
     public TreeDrawingTest(String testId, String socialWorkerId, String childId, String pictureId,Picture refToPicture,

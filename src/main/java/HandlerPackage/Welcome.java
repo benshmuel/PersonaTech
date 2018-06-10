@@ -5,10 +5,7 @@ import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +16,8 @@ public class Welcome extends Thread {
     private Employee currentEmployee; // stoped here
     private FirebaseHandler firebaseHandler ;
     private JSONObject jsonObjectHolder=null;
+    private static  final String PYTHON_ARGS="-o \"str\" -i";
+    private static  final String PATH="/home/personaitaben/PersonaPyEngine/MainModule/MainEngine.py";
 
     public Welcome(Socket socket ,FirebaseHandler firebaseHandler) {
         this.socket = socket;
@@ -265,7 +264,34 @@ public class Welcome extends Thread {
 
 
 
-                        case "checkJson":
+                        case "run Engine":
+
+                            //handle python engine //
+
+                            String url = (String) objectInputStream.readObject();
+
+
+
+                            try {
+                            Process p = Runtime.getRuntime().exec("python3"+ " "+PATH+ " "+ PYTHON_ARGS+url);
+                            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                            while (true){
+                                final String ret = in.readLine();
+                                if(ret == null) break;
+                                    System.out.println("value is : " + ret);
+
+
+                            }
+                            System.out.println("------ Done ----------");
+
+                            } catch (IOException e) {
+                            e.printStackTrace();
+                            }
+
+
+
+
+
                             JSONParser parser = new JSONParser();
 
                             try {
@@ -289,6 +315,7 @@ public class Welcome extends Thread {
                                 jsonObjectHolder = jsonObject; // save it for later //
 
                                 // need to send the json back to the client ..//
+                                objectOutputStream.writeObject(FirebaseHandler.SUCCESS);
                                 objectOutputStream.writeObject(jsonObject); // TODO: 24/05/2018 check if json is seriliazed
 
 

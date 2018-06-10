@@ -1,5 +1,7 @@
 package ModulesPackage;
 
+import org.json.simple.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -35,6 +37,10 @@ public class PersonDrawingTest extends Test implements Serializable {
     // ======================  Constructors and Setters & Getters ===============
 
     public PersonDrawingTest() {
+    }
+
+    public void updateTest(JSONObject object){
+        super.setJsonEngine(object);
     }
 
     public PersonDrawingTest(String testId, String socialWorkerId, String childId, String pictureId,Picture refToPicture,
