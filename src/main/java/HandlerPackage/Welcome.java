@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -341,6 +342,9 @@ public class Welcome extends Thread {
 
 
                                     images.add(img);
+
+                                    System.out.println("name :: ");
+                                    System.out.println(Arrays.toString(img.getPropertyNames()));
 
 
                                 } catch (final IOException e) {
