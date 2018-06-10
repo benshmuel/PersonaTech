@@ -341,7 +341,9 @@ public class Welcome extends Thread {
 
 
 
-                                    images.add(img);
+                                    if(img!=null)
+                                        images.add(img);
+                                    else System.out.println("#### IMAGE IS NULL #####");
 
                                     System.out.println("name :: ");
                                     System.out.println(Arrays.toString(img.getPropertyNames()));
