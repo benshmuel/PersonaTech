@@ -27,7 +27,8 @@ public class ImageCanvas implements Serializable {
     public void writeObject(ObjectOutputStream out) throws IOException {
         //
 
-        out.defaultWriteObject();
+
+        //out.defaultWriteObject();
         out.writeInt(images.size()); // how many images are serialized?
         for (BufferedImage eachImage : images) {
             ImageIO.write(eachImage, "png", out); // png
@@ -35,7 +36,7 @@ public class ImageCanvas implements Serializable {
     }
 
     public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
+       // in.defaultReadObject();
         final int imageCount = in.readInt();
         images = new ArrayList<BufferedImage>(imageCount);
         for (int i=0; i<imageCount; i++) {
