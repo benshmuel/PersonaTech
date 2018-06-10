@@ -348,14 +348,15 @@ public class Welcome extends Thread {
                                 }
 
 
-                                System.out.println("done !");
-                                System.out.println("Total images to Itamar : "+images.size());
-                                objectOutputStream.writeInt(images.size());
-                                for (BufferedImage eachImage : images) {
-                                    ImageIO.write(eachImage, "png", objectOutputStream);
-                                }
+
+                            }
 
 
+                            System.out.println("done !");
+                            System.out.println("Total images to Itamar : "+images.size());
+                            objectOutputStream.writeInt(images.size());
+                            for (BufferedImage eachImage : images) {
+                                ImageIO.write(eachImage, "png", objectOutputStream);
                             }
                         }
 
